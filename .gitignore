@@ -18,3 +18,11 @@ node_modules/
 04_Episodes/*/render/
 *.mp4
 *.mov
+
+# Local pipeline tools and generated intermediates
+03_Pipeline/.tools/
+03_Pipeline/.remotion/
+04_Episodes/*/lines.json
+04_Episodes/*/timing.json
+04_Episodes/*/mouth.json
+04_Episodes/*/takes.json

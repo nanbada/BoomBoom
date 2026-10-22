@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Temporary original technical-test rig. Never use in a published video. Pivot coordinates are in the 400x600 viewBox. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <g id="leg_l" data-pivot-x="160" data-pivot-y="458"><path fill="#E8AB4E" stroke="#382A25" stroke-width="8" stroke-linejoin="round" d="M130 438 C121 478 122 530 127 555 Q134 576 164 575 Q184 574 184 555 L185 446 Z"/></g>
+  <g id="leg_r" data-pivot-x="240" data-pivot-y="458"><path fill="#E8AB4E" stroke="#382A25" stroke-width="8" stroke-linejoin="round" d="M215 446 L270 438 C278 478 278 530 273 555 Q266 576 236 575 Q216 574 216 555 Z"/></g>
+  <g id="arm_l" data-pivot-x="112" data-pivot-y="303"><path fill="#E8AB4E" stroke="#382A25" stroke-width="8" stroke-linejoin="round" d="M131 284 C102 273 82 292 70 332 C56 379 59 429 75 449 Q91 459 108 438 C119 410 120 379 140 340 Z"/></g>
+  <g id="arm_r" data-pivot-x="288" data-pivot-y="303"><path fill="#E8AB4E" stroke="#382A25" stroke-width="8" stroke-linejoin="round" d="M269 284 C298 273 318 292 330 332 C344 379 341 429 325 449 Q309 459 292 438 C281 410 280 379 260 340 Z"/></g>
+  <g id="body"><path fill="#E8AB4E" stroke="#382A25" stroke-width="9" stroke-linejoin="round" d="M200 266 C278 266 319 329 301 439 C287 508 250 520 200 520 C150 520 113 508 99 439 C81 329 122 266 200 266 Z"/><path fill="#FFFDF6" d="M200 345 C241 345 264 382 260 447 C256 473 237 487 200 489 C163 487 144 473 140 447 C136 382 159 345 200 345 Z"/></g>
+  <g id="head" data-pivot-x="200" data-pivot-y="266">
+    <g transform="translate(20 65) scale(0.9 0.72)">
+    <path fill="#E8AB4E" stroke="#382A25" stroke-width="9" stroke-linejoin="round" d="M90 146 C33 119 28 202 60 247 C76 269 91 256 106 229 L119 163 Z"/>
+    <path fill="#E8AB4E" stroke="#382A25" stroke-width="9" stroke-linejoin="round" d="M310 146 C367 119 372 202 340 247 C324 269 309 256 294 229 L281 163 Z"/>
+    <path fill="#E8AB4E" stroke="#382A25" stroke-width="9" stroke-linejoin="round" d="M200 70 C269 68 316 121 326 190 C336 263 279 301 200 301 C121 301 64 263 74 190 C84 121 131 68 200 70 Z"/>
+    <path fill="none" stroke="#382A25" stroke-width="8" stroke-linecap="round" d="M171 83 Q180 45 195 65 Q205 36 223 69 Q237 49 247 87"/>
+    <path fill="#FFFDF6" d="M149 225 C120 230 114 253 124 273 C137 299 172 304 200 290 C228 304 263 299 276 273 C286 253 280 230 251 225 C226 221 210 230 200 241 C190 230 174 221 149 225 Z"/>
+    <g id="eyes_open"><ellipse fill="#382A25" cx="158" cy="192" rx="10" ry="15"/><ellipse fill="#382A25" cx="242" cy="192" rx="10" ry="15"/></g>
+    <g id="eyes_closed" opacity="0"><path fill="none" stroke="#382A25" stroke-width="7" stroke-linecap="round" d="M143 193 Q158 205 173 193 M227 193 Q242 205 257 193"/></g>
+    <path fill="none" stroke="#382A25" stroke-width="6" stroke-linecap="round" d="M137 180 Q159 167 181 183 M219 183 Q241 167 263 180"/>
+    <path fill="#382A25" d="M181 233 Q200 222 219 233 Q216 249 200 251 Q184 249 181 233 Z"/>
+    <g id="mouth_A"><path fill="none" stroke="#382A25" stroke-width="6" stroke-linecap="round" d="M182 267 Q200 278 218 267"/></g>
+    <g id="mouth_B" opacity="0"><path fill="#FFFDF6" stroke="#382A25" stroke-width="4" stroke-linejoin="round" d="M175 264 Q200 259 225 264 L222 281 Q200 286 178 281 Z"/><path fill="none" stroke="#382A25" stroke-width="3" d="M177 272 Q200 275 223 272 M190 263 L190 283 M210 263 L210 283"/></g>
+    <g id="mouth_C" opacity="0"><ellipse fill="#382A25" cx="200" cy="273" rx="15" ry="15"/></g>
+    <g id="mouth_D" opacity="0"><ellipse fill="#382A25" cx="200" cy="275" rx="18" ry="22"/></g>
+    <g id="mouth_E" opacity="0"><ellipse fill="#382A25" cx="200" cy="274" rx="20" ry="12"/></g>
+    <g id="mouth_F" opacity="0"><ellipse fill="#382A25" cx="200" cy="273" rx="15" ry="13"/><ellipse fill="#FFFDF6" cx="200" cy="273" rx="6" ry="6"/></g>
+    </g>
+  </g>
+</svg>

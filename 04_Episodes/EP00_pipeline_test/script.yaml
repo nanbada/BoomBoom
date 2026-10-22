@@ -1,0 +1,35 @@
+episodeId: EP00
+fps: 30
+durationSeconds: 15
+scenes:
+  - id: S01
+    backgroundId: bg_placeholder
+    props:
+      - id: balloon
+        color: "#EF4B45"
+    cameras:
+      landscape:
+        toby: { x: 560, y: 330, scale: 1 }
+        balloon: { x: 1160, y: 350, scale: 1 }
+        caption: { x: 960, y: 930, scale: 1, fontSize: 76 }
+      portrait:
+        toby: { x: 170, y: 660, scale: 1 }
+        balloon: { x: 650, y: 720, scale: 0.9 }
+        caption: { x: 540, y: 1540, scale: 1, fontSize: 70 }
+lines:
+  - id: L01
+    characterId: toby
+    text: "Oh no! Too big!"
+    emotion: surprised
+    sceneId: S01
+    startOffset: 2
+    targetWords: [big]
+    timingCorrections: []
+  - id: L02
+    characterId: toby
+    text: "Make it small!"
+    emotion: confident
+    sceneId: S01
+    startOffset: 5
+    targetWords: [small]
+    timingCorrections: []
