@@ -13,7 +13,7 @@ BoomBoom English is a pre-launch YouTube channel of English-only 2D cartoons (ch
 - `00_Plan/02_Season1_Launch_Plan.md` is canonical. Before scripting, read §§2–3, 6, 10. Before pipeline or asset work, read §§4–8, 11, 14. Read other sections as relevant. If a request conflicts with the plan, say so and propose a plan update instead of silently diverging.
 - `00_Plan/01_Research_Review.md` holds the keep/fix/archive verdicts on the legacy Gemini research.
 - `00_Plan/03_Voice_Decision.md` holds voice engine, casting and voice-asset rules. Read it before voice or audio pipeline work.
-- Legacy material (`00_Research_and_Strategy/` … `05_Episodes/`, `README.md`, `README_KR.md`) is reference-only; the plan overrides it. Do not edit originals: Phase 0 archives them to `99_Archive/gemini_v0/`. Write revised deliverables into the target layout below.
+- Legacy material lives in `99_Archive/gemini_v0/` (archived in Phase 0, 2026-10-23). It is reference-only; the plan overrides it. Do not edit it. Write revised deliverables into the target layout below.
 - Gemini's YouTube statistics are owner-accepted planning assumptions, not operating targets; operating baselines come from the channel's first eight weeks (plan §13). When quoting a number outside the repo, attach its original source and date if known, otherwise attribute it to the Gemini research.
 - The `00_Plan/` docs are mirrored in the claude.ai Project "BoomBoom English". After changing them, tell the owner the mirror needs updating.
 

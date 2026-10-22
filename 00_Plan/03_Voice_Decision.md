@@ -2,7 +2,7 @@
 
 작성: 2026-10-21 · 상태: 원장님 승인(2026-10-22, Codex 검토 승인). 메인 엔진과 목소리 나이는 파일럿 후 확정 · 상위 문서: `02_Season1_Launch_Plan.md` v2.3 §§4·5·8·11
 
-초안은 Claude web, GPT, Gemini의 조사를 Claude web이 정리한 문서(`03_Audio_and_SFX_Bank/voice-decision.md`)다. v2는 이 초안을 공식 문서와 다시 대조하고 계획 v2.3에 맞췄다. 원장님 결정(2026-10-21)은 세 가지다. Gemini와 Fish를 기준 엔진으로, ElevenLabs를 차선으로 둔다. 목소리 나이는 파일럿에서 비교한다. 조언과 교차 검토는 codex CLI로 받는다.
+초안은 Claude web, GPT, Gemini의 조사를 Claude web이 정리한 문서(`99_Archive/gemini_v0/03_Audio_and_SFX_Bank/voice-decision.md`)다. v2는 이 초안을 공식 문서와 다시 대조하고 계획 v2.3에 맞췄다. 원장님 결정(2026-10-21)은 세 가지다. Gemini와 Fish를 기준 엔진으로, ElevenLabs를 차선으로 둔다. 목소리 나이는 파일럿에서 비교한다. 조언과 교차 검토는 codex CLI로 받는다.
 
 ## 현재 결정
 

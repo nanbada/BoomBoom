@@ -1,0 +1,20 @@
+# OS
+.DS_Store
+
+# Secrets (plan §7)
+.env
+.env.*
+!.env.example
+
+# Node / Remotion
+node_modules/
+03_Pipeline/out/
+03_Pipeline/build/
+
+# Large binaries and raw generations — backed up in two places, not in git (plan §7, §14)
+02_Assets/_raw/
+02_Assets/voices/
+04_Episodes/*/audio/
+04_Episodes/*/render/
+*.mp4
+*.mov
