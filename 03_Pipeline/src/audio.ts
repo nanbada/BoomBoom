@@ -8,7 +8,11 @@ export function parseLoudness(stderr: string): Loudness {
   const block = stderr.match(/\{\s*"input_i"[\s\S]*?\}/)?.[0];
   if (!block) throw new Error('ffmpeg did not return loudnorm measurements');
   const result: Loudness = JSON.parse(block);
-  for (const value of Object.values(result)) if (value !== 'dynamic' && value !== 'linear' && !Number.isFinite(Number(value))) throw new Error('Nonfinite loudness measurement');
+  for (const key of ['input_i', 'input_tp', 'input_lra', 'input_thresh', 'target_offset'] as const) {
+    if (typeof result[key] !== 'string' || !result[key].trim() || !Number.isFinite(Number(result[key]))) {
+      throw new Error(`Missing or invalid loudness measurement: ${key}`);
+    }
+  }
   return result;
 }
 export async function measureLoudness(file: string) {
@@ -31,9 +35,10 @@ export async function lipSync(line: Line, take: Take, executable: string): Promi
 export async function mixAudio(lines: Line[], takes: Take[], seconds: number, output: string) {
   const args = ['-y', '-hide_banner', '-loglevel', 'error'];
   takes.forEach(take => args.push('-i', take.wavPath));
+  // generateTake supplies 48 kHz WAVs; delays and trimming use that common sample clock.
   const filters = lines.map((line, i) => `[${i}:a]adelay=${Math.round(line.startOffset * 48000)}S:all=1[a${i}]`);
-  filters.push(`${lines.map((_, i) => `[a${i}]`).join('')}amix=inputs=${lines.length}:normalize=0,apad,atrim=duration=${seconds},pan=stereo|c0=c0|c1=c0[mix]`);
-  args.push('-filter_complex', filters.join(';'), '-map', '[mix]', '-ar', '48000', '-c:a', 'pcm_s24le', output);
+  filters.push(`${lines.map((_, i) => `[a${i}]`).join('')}amix=inputs=${lines.length}:normalize=0,apad=whole_dur=${seconds},atrim=end_sample=${Math.round(seconds * 48000)},asetpts=N/SR/TB,pan=stereo|c0=c0|c1=c0[mix]`);
+  args.push('-filter_complex', filters.join(';'), '-map', '[mix]', '-t', String(seconds), '-ar', '48000', '-c:a', 'pcm_s24le', output);
   await run('ffmpeg', args);
 }
 export async function masterAudio(mix: string, output: string) {

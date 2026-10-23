@@ -35,7 +35,8 @@ export function charactersToWords(
     if (typeof character !== 'string' || [...character].length !== 1 || !Number.isFinite(start) || !Number.isFinite(end) || start < 0 || end < start) {
       throw new Error(`invalid alignment character or timestamp at index ${index}`);
     }
-    indexed.push({ character, start, end });
+    // RegExp match indices use UTF-16 units, including for non-BMP characters.
+    for (const unit of character.split('')) indexed.push({ character: unit, start, end });
   });
   const fullText = characters.join('');
   const ignored = new Set<number>();

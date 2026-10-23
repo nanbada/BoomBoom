@@ -16,7 +16,7 @@ npm run build:episode -- ../04_Episodes/EP00_pipeline_test
 
 명령은 대본 검증 → 대사 추출 → 대사별 음성 캐시 → 무음 제거 → 단어 타이밍 → Rhubarb → Remotion 가로·세로 렌더 → 2-pass loudnorm → 최종 AAC 재측정을 수행한다. 결과는 `out/EP00/EP00_16x9.mp4`, `out/EP00/EP00_9x16.mp4`다. 이 폴더 전체는 Git에서 제외된다. 개별 실행 수치와 캐시 사용 여부는 `out/EP00/build-report.json`에 기록한다.
 
-Rhubarb가 PATH에 없으면 `03_Pipeline/.tools/rhubarb/rhubarb`를 찾는다. 공식 배포처는 <https://github.com/DanielSWolf/rhubarb-lip-sync/releases/tag/v1.14.0>다. macOS ZIP을 풀 때 실행 파일과 함께 `res/`를 보존한다. 이 프로젝트에서 수동 설치는 인계 문서의 Homebrew 제한에 대한 승인을 받은 뒤에만 수행한다. 보안 설정 우회나 유료 설치는 하지 않는다.
+Rhubarb가 PATH에 없으면 `03_Pipeline/.tools/rhubarb/rhubarb`를 찾는다. 공식 배포처는 <https://github.com/DanielSWolf/rhubarb-lip-sync/releases/tag/v1.14.0>다. macOS ZIP을 풀 때 실행 파일과 함께 `res/`를 보존한다. 2026-10-23 사용자가 공식 ZIP의 프로젝트 내부 설치 예외를 승인해 이 위치에 설치했다. 보안 설정 우회나 유료 설치는 하지 않는다.
 
 ## 대본과 타이밍
 

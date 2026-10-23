@@ -32,3 +32,13 @@ test('seconds are rounded to nearest frame in one place', () => {
   assert.equal(secondsToFrames(2.05, 30), 62);
   assert.throws(() => secondsToFrames(Number.NaN, 30), /finite/);
 });
+
+
+test('non-BMP characters before a word preserve its character timing', () => {
+  const words = charactersToWords({
+    characters: ['😀', ' ', 'b', 'i', 'g'],
+    character_start_times_seconds: [0, 0.1, 0.2, 0.3, 0.4],
+    character_end_times_seconds: [0.1, 0.2, 0.3, 0.4, 0.5],
+  }, 'L01');
+  assert.deepEqual(words, [{lineId: 'L01', word: 'big', start: 0.2, end: 0.5}]);
+});
