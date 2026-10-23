@@ -13,6 +13,7 @@ const camera = z.strictObject({ toby: position, balloon: position, caption });
 const scene = z.strictObject({
   id: identifier,
   backgroundId: z.literal('bg_placeholder'),
+  resolutionLineId: identifier.optional(),
   props: z.array(z.strictObject({
     id: z.literal('balloon'),
     color: z.string().regex(/^#[0-9a-fA-F]{6}$/, 'must be a six-digit hex color'),
@@ -70,6 +71,13 @@ const episodeSchema = z.strictObject({
         ctx.addIssue({ code: 'custom', path: ['lines', index, 'timingCorrections', correctionIndex, 'word'], message: 'correction must name a target word' });
       }
     });
+  });
+  episode.scenes.forEach((item, index) => {
+    if (item.resolutionLineId === undefined) return;
+    const resolutionLine = episode.lines.find((entry) => entry.id === item.resolutionLineId);
+    if (!resolutionLine || resolutionLine.sceneId !== item.id) {
+      ctx.addIssue({ code: 'custom', path: ['scenes', index, 'resolutionLineId'], message: 'must reference a line in this scene' });
+    }
   });
 });
 

@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict';
-import { parseLoudness } from '../src/audio';
+import { lipSync, parseLoudness } from '../src/audio';
+import { charactersToWords } from '../src/timing';
+import type { Line } from '../src/schema';
+import type { Take } from '../src/voice';
 import { execFile } from 'node:child_process';
-import { mkdtemp, rm, stat, writeFile } from 'node:fs/promises';
+import { chmod, mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
@@ -58,4 +61,36 @@ test('loudnorm requires every measurement used by the second pass', () => {
     assert.throws(() => parseLoudness(JSON.stringify({...valid, [key]: '-inf'})));
     assert.throws(() => parseLoudness(JSON.stringify({...valid, [key]: ''})));
   }
+});
+
+test('lipSync uses the trimmed WAV and the same timeline as words without subtracting silence twice', async (t) => {
+  const directory = await mkdtemp(path.join(tmpdir(), 'boomboom-lipsync-test-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const executable = path.join(directory, 'rhubarb.mjs');
+  const wavPath = path.join(directory, 'final.wav');
+  await writeFile(wavPath, 'trimmed WAV fixture');
+  await writeFile(executable, `#!${process.execPath}
+import assert from 'node:assert/strict';
+import {readFile, writeFile} from 'node:fs/promises';
+import path from 'node:path';
+const args = process.argv.slice(2);
+assert.equal(args[args.indexOf('--extendedShapes') + 1], '');
+assert.equal(path.basename(args.at(-1)), 'final.wav');
+assert.equal(await readFile(args.at(-1), 'utf8'), 'trimmed WAV fixture');
+assert.equal(await readFile(args[args.indexOf('--dialogFile') + 1], 'utf8'), 'big');
+await writeFile(args[args.indexOf('-o') + 1], JSON.stringify({mouthCues: [{start: 0.35, end: 0.55, value: 'B'}]}));
+`);
+  await chmod(executable, 0o755);
+  const line = { id: 'RENAMED', text: 'big', startOffset: 2 } as Line;
+  const take = { wavPath, trimStartSeconds: 0.25, alignment: {
+    characters: ['b', 'i', 'g'], character_start_times_seconds: [0.6, 0.65, 0.7],
+    character_end_times_seconds: [0.65, 0.7, 0.8],
+  } } as Take;
+  const words = charactersToWords(take.alignment, line.id, take.trimStartSeconds, line.startOffset);
+  const mouths = await lipSync(line, take, executable);
+  assert.deepEqual(mouths, [{ lineId: 'RENAMED', start: 2.35, end: 2.55, value: 'B' }]);
+  assert.equal(mouths[0].start, words[0].start);
+  assert.equal(mouths[0].end, words[0].end);
+  assert.deepEqual(JSON.parse(await readFile(path.join(directory, 'mouth.json'), 'utf8')).mouthCues,
+    [{ start: 0.35, end: 0.55, value: 'B' }]);
 });

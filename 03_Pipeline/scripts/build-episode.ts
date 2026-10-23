@@ -57,6 +57,9 @@ async function main() {
   await json(path.join(episodeDir, 'mouth.json'), mouthCues);
   await json(path.join(episodeDir, 'takes.json'), takes.map(({ alignment, wavPath, ...take }) => ({ ...take, wavPath: path.relative(episodeDir, wavPath), timingFile: 'timing.json' })));
   const data: RenderData = { episode, words, mouthCues, lineDurations: Object.fromEntries(takes.map(t => [t.lineId, t.durationSeconds])), rigSvg: await readFile(path.join(root, '02_Assets/characters/toby/toby_temp_rig.svg'), 'utf8') };
+  const lastLineEnd = Math.max(...lines.map(line => line.startOffset + data.lineDurations[line.id]));
+  const endCheckFrame = Math.min(secondsToFrames(episode.durationSeconds, episode.fps) - 1,
+    secondsToFrames((lastLineEnd + episode.durationSeconds) / 2, episode.fps));
   await json(path.join(out, 'render-data.json'), data);
   const mix = path.join(out, 'mix.wav'), master = path.join(out, 'master.wav');
   await mixAudio(lines, takes, episode.durationSeconds, mix);
@@ -76,10 +79,10 @@ async function main() {
     for (const word of targetWords) {
       await renderStill({ composition, serveUrl, output: path.join(out, `${suffix}_${word.word}.png`), inputProps, frame: secondsToFrames(word.start, episode.fps), imageFormat: 'png' });
     }
-    await renderStill({ composition, serveUrl, output: path.join(out, `${suffix}_end.png`), inputProps, frame: secondsToFrames(12, episode.fps), imageFormat: 'png' });
+    await renderStill({ composition, serveUrl, output: path.join(out, `${suffix}_end.png`), inputProps, frame: endCheckFrame, imageFormat: 'png' });
     renders.push({ file: final, integratedLufs: Number(measured.input_i), truePeakDbtp: Number(measured.input_tp), width: composition.width, height: composition.height, frames: composition.durationInFrames });
   }
-  const result = { completedAt: new Date().toISOString(), elapsedSeconds: (performance.now() - began) / 1000,
+  const result = { completedAt: new Date().toISOString(), elapsedSeconds: (performance.now() - began) / 1000, endCheckFrame,
     takes: takes.map(t => ({lineId: t.lineId, cacheKey: t.cacheKey, cacheHit: t.cacheHit, trimStartSeconds: t.trimStartSeconds, durationSeconds: t.durationSeconds})),
     targetPopups: words.filter(w => lines.find(l => l.id === w.lineId)!.targetWords.some(t => t.toLowerCase() === w.word.toLowerCase())).map(w => ({...w, popupFrame: secondsToFrames(w.start, episode.fps), listeningCheck: 'pending'})), audioMeasurements, renders };
   await json(path.join(out, 'build-report.json'), result);

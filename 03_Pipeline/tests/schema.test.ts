@@ -29,6 +29,17 @@ test('duplicate line IDs are rejected', () => {
   assert.throws(() => parseScript(validSource.replace('id: L02', 'id: L01')), /field lines\.1\.id: duplicate line ID/);
 });
 
+test('scene resolution follows a renamed line and rejects missing or foreign references', () => {
+  const renamed = validSource.replaceAll('L02', 'RESOLVE');
+  assert.equal(parseScript(renamed).scenes[0].resolutionLineId, 'RESOLVE');
+  assert.throws(() => parseScript(validSource.replace('resolutionLineId: L02', 'resolutionLineId: missing')),
+    /line \d+, field scenes\.0\.resolutionLineId: must reference a line in this scene/);
+  const episode = parseScript(validSource);
+  episode.scenes.push({ ...episode.scenes[0], id: 'S02' });
+  assert.throws(() => parseScript(JSON.stringify(episode)), /field scenes\.1\.resolutionLineId: must reference a line in this scene/);
+  assert.equal(parseScript(validSource.replace('    resolutionLineId: L02\n', '')).scenes[0].resolutionLineId, undefined);
+});
+
 test('YAML aliases and custom tags are rejected', () => {
   assert.throws(() => parseScript(validSource.replace('episodeId: EP00', 'episodeId: &ep EP00').replace('    sceneId: S01', '    sceneId: *ep')), /aliases are forbidden/);
   assert.throws(() => parseScript(validSource.replace('episodeId: EP00', 'episodeId: !private EP00')), /YAML tags are forbidden|Unresolved tag/);

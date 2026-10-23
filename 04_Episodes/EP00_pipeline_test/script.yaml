@@ -4,6 +4,7 @@ durationSeconds: 15
 scenes:
   - id: S01
     backgroundId: bg_placeholder
+    resolutionLineId: L02
     props:
       - id: balloon
         color: "#EF4B45"
@@ -32,4 +33,7 @@ lines:
     sceneId: S01
     startOffset: 5
     targetWords: [small]
-    timingCorrections: []
+    timingCorrections:
+      - word: small
+        offsetSeconds: -0.0705
+        reason: "Automatic WAV spectral onset estimate: 5.3475s; original popup 163 is 2.575 frames late. Human frame-by-frame listening pending."

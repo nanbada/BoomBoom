@@ -22,6 +22,8 @@ Rhubarb가 PATH에 없으면 `03_Pipeline/.tools/rhubarb/rhubarb`를 찾는다. 
 
 `04_Episodes/EP00_pipeline_test/script.yaml`이 대사의 유일한 원본이다. `lines.json`은 생성물이다. 현 단계는 한 장면과 토비 한 명만 지원한다. 가로·세로 카메라 좌표를 별도로 지정한다. `toby`와 `balloon`은 왼쪽 위 좌표다. `caption.x`는 가로 중심, `caption.y`는 위쪽 좌표다.
 
+장면의 `resolutionLineId`가 가리키는 대사가 끝나면 풍선이 작아지고 토비가 만족 표정으로 바뀐다. 같은 장면의 대사 ID만 허용하며, 필드를 생략하면 이 결과 동작을 하지 않는다. 종료 확인 PNG는 마지막 대사 종료와 에피소드 종료 사이의 중간 프레임에서 만든다. 해당 프레임은 `build-report.json`의 `endCheckFrame`에 남긴다.
+
 `timing.json`은 `{lineId, word, start, end}` 배열이며, 초 단위의 에피소드 절대 시각을 담는다. 나중에 로컬 정렬기도 이 형식을 출력하면 된다. 글자 타임스탬프에서 앞 무음 제거 길이를 빼고 대사 오프셋을 더한다. Rhubarb에도 같은 최종 WAV와 같은 오프셋을 쓴다. 프레임은 `secondsToFrames()` 한 함수에서 반올림한다.
 
 목표 단어가 2프레임보다 어긋나면 해당 대사의 `timingCorrections`에 단어, 초 보정값, 이유를 기록한다.

@@ -50,7 +50,7 @@ export const Episode: React.FC<EpisodeProps> = ({episode, words, mouthCues, line
   const currentLine = [...episode.lines].reverse().find((line) => line.startOffset <= time);
   const scene = episode.scenes.find((item) => item.id === currentLine?.sceneId) ?? episode.scenes[0];
   const camera = scene.cameras[aspect];
-  const shrinkLine = episode.lines.find((line) => line.id === 'L02');
+  const shrinkLine = episode.lines.find((line) => line.id === scene.resolutionLineId);
   const shrinkStart = shrinkLine
     ? secondsToFrames(shrinkLine.startOffset + (lineDurations[shrinkLine.id] ?? 0), fps)
     : Number.POSITIVE_INFINITY;
